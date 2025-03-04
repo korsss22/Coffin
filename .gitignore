@@ -1,0 +1,9 @@
+Library/
+Temp/
+Logs/
+obj/
+*.suo
+*.user
+*.sln
+*.csproj
+*.unitypackage
