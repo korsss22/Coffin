@@ -78,7 +78,10 @@ public class Movement : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
-        MoveCharacter(); // 캐릭터 이동
-        RotateCamera(); // 카메라 회전
+        if (photonView.IsMine) {
+            MoveCharacter(); // 캐릭터 이동
+            RotateCamera(); // 카메라 회전
+        }
+        
     }
 }
