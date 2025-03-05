@@ -4,8 +4,9 @@ using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Assertions.Comparers;
+using Mirror;
 
-public class Movement : MonoBehaviour
+public class Movement : NetworkBehaviour
 {
     public Transform mainCamera;
 
@@ -78,6 +79,8 @@ public class Movement : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
+        if (!isOwned) return;
+
         MoveCharacter(); // 캐릭터 이동
         RotateCamera(); // 카메라 회전
     }
