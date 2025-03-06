@@ -995,7 +995,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  mainCamera: {fileID: 2384100186103528362}
+  mainCamera: {fileID: 2384100186103528365}
   speed: 1
   mouseSensitivity: 5.08
   finalSpeed: 1
@@ -1030,7 +1030,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncDirection: 1
   syncMode: 0
-  syncInterval: 0
+  syncInterval: 0.002
   target: {fileID: 6807026850888243299}
   syncPosition: 1
   syncRotation: 1
