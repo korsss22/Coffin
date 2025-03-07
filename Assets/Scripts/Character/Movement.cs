@@ -107,7 +107,7 @@ public class Movement : NetworkBehaviour
     }
 
     // Update is called once per frame
-    void Update() {
+    void FixedUpdate() {
         if (!isLocalPlayer) return;
 
         MoveCharacter(); // 캐릭터 이동

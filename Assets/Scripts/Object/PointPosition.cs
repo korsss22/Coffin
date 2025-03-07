@@ -27,14 +27,14 @@ public class PointPosition : MonoBehaviour
 
         if (listLength == 0)
         {
-            return new Vector3(0f, 1.8f, 0f);
+            return new Vector3(0f, 0f, 0f);
         }
 
         return avVector / listLength;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         this.transform.position = getAverage() + new Vector3(0f, 1.8f, 0f);
 
