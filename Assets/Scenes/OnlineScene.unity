@@ -151,7 +151,7 @@ ConfigurableJoint:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 596607853}
-  m_ConnectedBody: {fileID: 0}
+  m_ConnectedBody: {fileID: -1173239732658900094, guid: c9affe9e8dca0824d944038290f57650, type: 3}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0.733253, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
