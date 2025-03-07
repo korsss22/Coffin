@@ -4,13 +4,10 @@ using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Assertions.Comparers;
-using Photon.Pun;
-using Photon.Realtime;
 
-public class Movement : MonoBehaviour
+public class Movement1 : MonoBehaviour
 {
     public Transform mainCamera;
-    public PhotonView photonView;
 
     [Range(0.0f, 10.0f)]
     public float speed;
@@ -39,16 +36,16 @@ public class Movement : MonoBehaviour
         if (Input.anyKey) {
             Vector3 moveDirection = Vector3.zero;
 
-            if (Input.GetKey(KeyCode.W)) {
+            if (Input.GetKey(KeyCode.T)) {
                 moveDirection += mainCamera.forward;
             }
-            if (Input.GetKey(KeyCode.A)) {
+            if (Input.GetKey(KeyCode.F)) {
                 moveDirection += -mainCamera.right;
             }
-            if (Input.GetKey(KeyCode.S)) {
+            if (Input.GetKey(KeyCode.G)) {
                 moveDirection += -mainCamera.forward;
             }
-            if (Input.GetKey(KeyCode.D)) {
+            if (Input.GetKey(KeyCode.H)) {
                 moveDirection += mainCamera.right;
             }
             // if (Input.GetKeyDown(KeyCode.Space)) {
@@ -76,17 +73,13 @@ public class Movement : MonoBehaviour
 
     // Start is called before the first frame update
     void Start() {
-        // StartCoroutine(DecreaseSpeed(0.5f));
-
-        photonView = GetComponent<PhotonView>();
+       // StartCoroutine(DecreaseSpeed(0.5f));
     }
 
     // Update is called once per frame
     void Update() {
-        if (photonView.IsMine) {
-            MoveCharacter(); // 캐릭터 이동
+           MoveCharacter(); // 캐릭터 이동
             RotateCamera(); // 카메라 회전
-        }
         
         
     }
