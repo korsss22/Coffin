@@ -466,7 +466,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 151759964}
         m_TargetAssemblyTypeName: SteamLobby, Assembly-CSharp
-        m_MethodName: StartConnect
+        m_MethodName: ClickConnectButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -573,8 +573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ed36c526a44fa340b987d3b9af39b4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hostButton: {fileID: 1990347903}
-  ClientButton: {fileID: 560029326}
+  ButtonPanel: {fileID: 1102660686}
   ConnectPanel: {fileID: 1790829259}
   CancelButton: {fileID: 848486862}
   Message: {fileID: 1355126570}
@@ -1377,7 +1376,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 151759964}
         m_TargetAssemblyTypeName: SteamLobby, Assembly-CSharp
-        m_MethodName: ClickClient
+        m_MethodName: ClickClientButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1616,7 +1615,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 151759964}
         m_TargetAssemblyTypeName: SteamLobby, Assembly-CSharp
-        m_MethodName: Cancel
+        m_MethodName: ClickCancelButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3590,7 +3589,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 151759964}
         m_TargetAssemblyTypeName: SteamLobby, Assembly-CSharp
-        m_MethodName: HostLobby
+        m_MethodName: ClickHostButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
