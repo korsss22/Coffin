@@ -42,7 +42,7 @@ public class SteamLobby : MonoBehaviour
         networkManager.StartHost();
         currentLobbyID = new CSteamID(callback.m_ulSteamIDLobby);
 
-        SteamMatchmaking.SetLobbyData(currentLobbyID, "Captain", SteamUser.GetSteamID().ToString());
+        SteamMatchmaking.SetLobbyData(currentLobbyID, "HostAddress", SteamUser.GetSteamID().ToString());
         SteamMatchmaking.SetLobbyData(currentLobbyID, "Password", "1234");      
     }
 
@@ -58,7 +58,7 @@ public class SteamLobby : MonoBehaviour
     }
 
     // 네트워크 주소를 설정
-    networkManager.networkAddress = currentLobbyID.ToString();
+    networkManager.networkAddress = "steam://connect/" + currentLobbyID.ToString();
     
     // 클라이언트 시작
     networkManager.StartClient();
