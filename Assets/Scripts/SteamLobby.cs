@@ -39,7 +39,7 @@ public class SteamLobby : MonoBehaviour
         }
         networkManager.StartHost();
         currentLobbyID = new CSteamID(callback.m_ulSteamIDLobby);
-
+        Debug.Log(currentLobbyID);
         SteamMatchmaking.SetLobbyData(currentLobbyID, HostAddressKey, SteamUser.GetSteamID().ToString());
 
         SteamMatchmaking.SetLobbyData(currentLobbyID, "Password", "1234");      

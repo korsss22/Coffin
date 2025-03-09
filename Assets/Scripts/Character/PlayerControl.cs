@@ -89,7 +89,7 @@ private void RpcMove(Vector3 newPosition) {
 
     public override void OnStartLocalPlayer() // LocalPlayer인 경우에 실행
     {
-        if (mainCamera) mainCamera.SetActive(true);
+        mainCamera.SetActive(false);
     }
 
     public override void OnStartClient()
@@ -106,7 +106,7 @@ private void RpcMove(Vector3 newPosition) {
     void Start() {
         gameObject.TryGetComponent(out Animator animator);
         anim = animator;
-        if (mainCamera) mainCamera.SetActive(false);
+        if (isLocalPlayer) mainCamera.SetActive(true);
        // StartCoroutine(DecreaseSpeed(0.5f));
     }
 
