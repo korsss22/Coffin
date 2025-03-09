@@ -17,15 +17,14 @@ public class PlayerControl : NetworkBehaviour
 
     // 카메라 회전 함수
     void RotateCamera() {
-    if (!isLocalPlayer) return; // 본인만 회전
-    float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
-    float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
-    
-    xRotation -= mouseY;
-    yRotation += mouseX;
-    mainCamera.transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-}
-
+        if (!isLocalPlayer) return;
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+        
+        xRotation -= mouseY;
+        yRotation += mouseX;
+        mainCamera.transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+    }
 
     // 캐릭터 이동 함수
     void MoveCharacter() {
@@ -107,6 +106,7 @@ private void RpcMove(Vector3 newPosition) {
     void Start() {
         gameObject.TryGetComponent(out Animator animator);
         anim = animator;
+        if (mainCamera) mainCamera.SetActive(false);
        // StartCoroutine(DecreaseSpeed(0.5f));
     }
 
