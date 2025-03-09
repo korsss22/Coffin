@@ -1,12 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Assertions.Comparers;
 using Mirror;
 
-public class Movement : NetworkBehaviour
+public class PlayerControl : NetworkBehaviour
 {
     public GameObject mainCamera;
 
@@ -22,13 +17,15 @@ public class Movement : NetworkBehaviour
 
     // 카메라 회전 함수
     void RotateCamera() {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
-        
-        xRotation -= mouseY;
-        yRotation += mouseX;
-        mainCamera.transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-    }
+    if (!isLocalPlayer) return; // 본인만 회전
+    float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+    float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+    
+    xRotation -= mouseY;
+    yRotation += mouseX;
+    mainCamera.transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+}
+
 
     // 캐릭터 이동 함수
     void MoveCharacter() {
@@ -79,9 +76,16 @@ public class Movement : NetworkBehaviour
     */
 
     [Command]
-    private void CmdMove(Vector3 newPosition) {
-        transform.position = newPosition;
-    }
+private void CmdMove(Vector3 newPosition) {
+    RpcMove(newPosition);
+}
+
+[ClientRpc]
+private void RpcMove(Vector3 newPosition) {
+    if (isLocalPlayer) return; // 로컬 플레이어는 직접 이동 처리하므로 제외
+    transform.position = newPosition;
+}
+
 
 
     public override void OnStartLocalPlayer() // LocalPlayer인 경우에 실행
@@ -101,7 +105,7 @@ public class Movement : NetworkBehaviour
 
     // Start is called before the first frame update
     void Start() {
-        gameObject.TryGetComponent<Animator>(out Animator animator);
+        gameObject.TryGetComponent(out Animator animator);
         anim = animator;
        // StartCoroutine(DecreaseSpeed(0.5f));
     }
