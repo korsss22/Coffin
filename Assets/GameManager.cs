@@ -14,15 +14,18 @@ public class GameManager : NetworkBehaviour {
     public GameObject timerText;
     private GameObject Coffin = null;
     public GameObject JointPoint;
-
     Transform CoffinBase;
     Transform CoffinLid;
     private bool allReady;
     private bool gameStarted = false;
-
+    private bool isCoroutine = false;
+    [Range(0.0f, 10f)]
+    public float startTime;
+    [SyncVar]
+    private float currentTime;
     private void Start() {
         Coffin = SpawnPrefab("Coffin_Black", new Vector3(0, 1.8f, 0));
-
+        JointPoint = SpawnPrefab("JointPoint", new Vector3(0, 0, 0));
         CoffinBase = Coffin.transform.Find("Base");
         CoffinLid = Coffin.transform.Find("Lid");
         
@@ -31,43 +34,52 @@ public class GameManager : NetworkBehaviour {
     }
 
     private void CheckReadyState() {
-        if (!NetworkServer.active) return;
+    if (!NetworkServer.active) return;
 
-        allReady = true;
+    allReady = true;
 
-        foreach (var conn in NetworkServer.connections.Values) {
-            if (conn.identity == null) continue;
-            if (!conn.identity.gameObject.GetComponent<PlayerControl>().GetReady()) {
-                allReady = false;
-                break;
-            }
+    foreach (var conn in NetworkServer.connections.Values) {
+        if (conn.identity == null) continue;
+        if (!conn.identity.gameObject.GetComponent<PlayerControl>().GetReady()) {
+            allReady = false;
+            break;
         }
-        StartCoroutine(StartCountDownTimer(3f));
     }
+    if (!isCoroutine) StartCoroutine(StartCountDownTimer(startTime)); // startTime을 이용해 카운트다운 시작
+}
 
-    private IEnumerator StartCountDownTimer(float countTime) {
-        float currentTime = countTime;
-        while (currentTime > 0f) {
-            if (!allReady) {
-                timerText.SetActive(false);
-                yield break;
-            }
-            timerText.SetActive(true);
-            timerText.GetComponent<TextMeshProUGUI>().text = currentTime.ToString("F0");
-            currentTime -= Time.deltaTime;
-            yield return null;
+private IEnumerator StartCountDownTimer(float countTime) {
+    currentTime = countTime; // countTime이 startTime으로 설정됨
+    isCoroutine = true;
+    timerText.SetActive(true);
+    while (currentTime > 0f) {
+        if (!allReady) {
+            timerText.SetActive(false);
+            isCoroutine = false;
+            yield break;
         }
-        timerText.SetActive(false);
-        StartGame();
-    } 
-
-    private void StartGame() {
-        Debug.Log("StartGame");
-        gameStarted = true;
-        CoffinBase.GetComponent<Rigidbody>().isKinematic = false;
-        CoffinLid.GetComponent<Rigidbody>().isKinematic = false;
-        CoffinBase.GetComponent<ConfigurableJoint>().connectedBody = JointPoint.GetComponent<Rigidbody>();
+        yield return new WaitForSeconds(0.01f);
+        currentTime -= 0.01f;
+        RpcUpdateCount(currentTime);
     }
+    RpcStartGame();
+}
+
+[ClientRpc]
+private void RpcStartGame() {
+    Debug.Log("StartGame");
+    gameStarted = true;
+    CoffinBase.GetComponent<Rigidbody>().isKinematic = false;
+    CoffinLid.GetComponent<Rigidbody>().isKinematic = false;
+    CoffinBase.GetComponent<ConfigurableJoint>().connectedBody = JointPoint.GetComponent<Rigidbody>();
+    timerText.SetActive(false);
+}
+
+[ClientRpc]
+private void RpcUpdateCount(float currentTime) {
+    timerText.GetComponent<TextMeshProUGUI>().text = currentTime.ToString("0");
+}
+
 
     public GameObject SpawnPrefab(string objectName, Vector3 spawnLocation) {
         GameObject selectedObject = null;
