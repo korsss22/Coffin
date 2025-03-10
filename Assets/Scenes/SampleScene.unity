@@ -5975,7 +5975,7 @@ Transform:
   - {fileID: 1309698792}
   - {fileID: 1199643381}
   m_Father: {fileID: 1470444489}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!64 &145257934
 MeshCollider:
@@ -44776,7 +44776,7 @@ Transform:
   - {fileID: 956066611}
   - {fileID: 549751316}
   m_Father: {fileID: 1470444489}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!64 &847904848
 MeshCollider:
@@ -55538,7 +55538,7 @@ Transform:
   - {fileID: 921965894}
   - {fileID: 1419704297}
   m_Father: {fileID: 1470444489}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!64 &1014210968
 MeshCollider:
@@ -73818,12 +73818,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1606875670}
   - {fileID: 145257933}
   - {fileID: 1851582612}
   - {fileID: 1014210967}
   - {fileID: 847904847}
   - {fileID: 1628382717}
+  - {fileID: 1606875670}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -84790,7 +84790,7 @@ Transform:
   - {fileID: 809565379}
   - {fileID: 1492364057}
   m_Father: {fileID: 1470444489}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!64 &1628382718
 MeshCollider:
@@ -86634,7 +86634,7 @@ Transform:
   - {fileID: 575393576}
   - {fileID: 51749315}
   m_Father: {fileID: 1470444489}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!64 &1851582613
 MeshCollider:
