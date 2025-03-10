@@ -1126,6 +1126,7 @@ CanvasRenderer:
   m_GameObject: {fileID: 1179213089}
   m_CullTransparentMesh: 1
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!1 &1186434658
 GameObject:
   m_ObjectHideFlags: 0
@@ -1202,6 +1203,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerList: []
+=======
+>>>>>>> 3971a15f92664294d2b99b6f92e510741db1303b
 =======
 >>>>>>> 3971a15f92664294d2b99b6f92e510741db1303b
 --- !u!1 &1604478456

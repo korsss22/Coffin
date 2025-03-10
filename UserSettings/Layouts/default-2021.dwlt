@@ -328,9 +328,12 @@ MonoBehaviour:
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
 <<<<<<< HEAD
+<<<<<<< HEAD
   controlID: 11386
 --- !u!114 &7
 =======
+=======
+>>>>>>> 3971a15f92664294d2b99b6f92e510741db1303b
   controlID: 44
 --- !u!114 &13
 >>>>>>> 3971a15f92664294d2b99b6f92e510741db1303b
@@ -1277,9 +1280,15 @@ MonoBehaviour:
     m_Value: {x: 0.008519317, y: 0.98902035, z: -0.06319444, w: 0.13331439}
   m_Size:
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_Target: 2.534507
     speed: 2
     m_Value: 1.4181185
+=======
+    m_Target: 1.8630177
+    speed: 2
+    m_Value: 1.8630177
+>>>>>>> 3971a15f92664294d2b99b6f92e510741db1303b
 =======
     m_Target: 1.8630177
     speed: 2
