@@ -1,9 +1,8 @@
 using UnityEngine;
 using Mirror;
-
 public class PlayerControl : NetworkBehaviour
 {
-    public GameObject mainCamera;
+    public GameObject playerCamera;
 
     [Range(0.0f, 10.0f)]
     public float speed;
@@ -17,13 +16,12 @@ public class PlayerControl : NetworkBehaviour
 
     // 카메라 회전 함수
     void RotateCamera() {
-        if (!isLocalPlayer) return;
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
         
         xRotation -= mouseY;
         yRotation += mouseX;
-        mainCamera.transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+        playerCamera.transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
     }
 
     // 캐릭터 이동 함수
@@ -32,19 +30,19 @@ public class PlayerControl : NetworkBehaviour
             Vector3 moveDirection = Vector3.zero;
 
             if (Input.GetKey(KeyCode.W)) {
-                moveDirection += mainCamera.transform.forward;
+                moveDirection += playerCamera.transform.forward;
                 anim.SetBool("Walk", true);
             }
             if (Input.GetKey(KeyCode.A)) {
-                moveDirection += -mainCamera.transform.right;
+                moveDirection += -playerCamera.transform.right;
                 anim.SetBool("Walk", true);
             }
             if (Input.GetKey(KeyCode.S)) {
-                moveDirection += -mainCamera.transform.forward;
+                moveDirection += -playerCamera.transform.forward;
                 anim.SetBool("Walk", true);
             }
             if (Input.GetKey(KeyCode.D)) {
-                moveDirection += mainCamera.transform.right;
+                moveDirection += playerCamera.transform.right;
                 anim.SetBool("Walk", true);
             }
             // if (Input.GetKeyDown(KeyCode.Space)) {
@@ -72,9 +70,9 @@ public class PlayerControl : NetworkBehaviour
     }
     */
 
-    public override void OnStartLocalPlayer() // LocalPlayer인 경우에 실행
+    public override void OnStartLocalPlayer()
     {
-        mainCamera.SetActive(false);
+        if (playerCamera) playerCamera.SetActive(true);
     }
 
     public override void OnStartClient()
@@ -91,7 +89,7 @@ public class PlayerControl : NetworkBehaviour
     void Start() {
         gameObject.TryGetComponent(out Animator animator);
         anim = animator;
-        if (isLocalPlayer) mainCamera.SetActive(true);
+        if (isLocalPlayer) playerCamera.SetActive(true);
        // StartCoroutine(DecreaseSpeed(0.5f));
     }
 
