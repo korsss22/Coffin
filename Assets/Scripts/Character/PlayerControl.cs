@@ -55,11 +55,9 @@ public class PlayerControl : NetworkBehaviour
                 moveDirection.Normalize(); //정규화 (벡터의 크기를 1로로)
 
                 Quaternion toRotation = Quaternion.LookRotation(moveDirection);
-                transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, Time.deltaTime * 10f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, Time.deltaTime * 10f); //부드럽게 회전전
 
-                transform.position += moveDirection * speed * Time.deltaTime;   
-
-                CmdMove(transform.position);
+                transform.position += Time.deltaTime * speed * moveDirection;   //벡터를 가장 나중에, 작은 값을 먼저 계산하는게 이득득
             }
         } else {
             anim.SetBool("Walk", false);
@@ -73,19 +71,6 @@ public class PlayerControl : NetworkBehaviour
         }
     }
     */
-
-    [Command]
-private void CmdMove(Vector3 newPosition) {
-    RpcMove(newPosition);
-}
-
-[ClientRpc]
-private void RpcMove(Vector3 newPosition) {
-    if (isLocalPlayer) return; // 로컬 플레이어는 직접 이동 처리하므로 제외
-    transform.position = newPosition;
-}
-
-
 
     public override void OnStartLocalPlayer() // LocalPlayer인 경우에 실행
     {
