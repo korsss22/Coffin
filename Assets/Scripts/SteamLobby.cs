@@ -13,6 +13,7 @@ public class SteamLobby : MonoBehaviour
     public TMP_InputField LobbyIdInputField;
     public TMP_InputField PasswordInputField;
     public CSteamID currentLobbyID;
+    public LobbyDataSO lobbyDataSO;
     private const string HostAddressKey = "HostAddress";
     private NetworkManager networkManager;
     private string LobbyID;
@@ -39,10 +40,14 @@ public class SteamLobby : MonoBehaviour
         }
         networkManager.StartHost();
         currentLobbyID = new CSteamID(callback.m_ulSteamIDLobby);
-        Debug.Log(currentLobbyID);
+        
         SteamMatchmaking.SetLobbyData(currentLobbyID, HostAddressKey, SteamUser.GetSteamID().ToString());
+        SteamMatchmaking.SetLobbyData(currentLobbyID, "Password", "1234");
 
-        SteamMatchmaking.SetLobbyData(currentLobbyID, "Password", "1234");      
+        string id = currentLobbyID.ToString();
+        string pw = SteamMatchmaking.GetLobbyData(currentLobbyID, "Password");
+
+        lobbyDataSO.SetLobbyData(id, pw);
     }
 
     private void OnLobbyEntered(LobbyEnter_t callback) {
