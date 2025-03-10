@@ -1487,12 +1487,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 455d5003a6cb83c40814fb18daaa5031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
+  syncDirection: 1
   syncMode: 0
   syncInterval: 0
   playerCamera: {fileID: 4196725266635563092}
   speed: 1.79
   mouseSensitivity: 2.12
+  scaleRatio: 0.99
 --- !u!114 &4769761521173132687
 MonoBehaviour:
   m_ObjectHideFlags: 0

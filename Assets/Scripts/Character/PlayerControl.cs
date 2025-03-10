@@ -10,12 +10,35 @@ public class PlayerControl : NetworkBehaviour
     [Range(0.0f, 10.0f)]
     public float mouseSensitivity;
 
+    [Range(0.0f, 10f)]
+    public float scaleRatio =0.0f;
     private float xRotation = 0f;
     private float yRotation = 0f;
     private Animator anim;
 
+    [SyncVar]
+    private bool isReady = false;
+
     // 카메라 회전 함수
     void RotateCamera() {
+        float scrollInput = Input.GetAxis("Mouse ScrollWheel");
+
+        Vector3 minScale = new Vector3(1.0f, 1.0f, 1.0f);  // 최소 크기 (0.1f로 설정)
+        Vector3 maxScale = new Vector3(8.0f, 8.0f, 8.0f);  // 최대 크기 (2.0f로 설정)
+        Vector3 addScaleRatio = new (scaleRatio, scaleRatio, scaleRatio);
+
+        if (scrollInput != 0) {
+            if (scrollInput > 0f) { //휠 위로로
+                playerCamera.transform.localScale -= addScaleRatio;
+            } else {
+                playerCamera.transform.localScale += addScaleRatio;
+            }
+            playerCamera.transform.localScale = Vector3.Max(playerCamera.transform.localScale, minScale);
+            playerCamera.transform.localScale = Vector3.Min(playerCamera.transform.localScale, maxScale);
+        }
+
+        
+
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
         
@@ -45,9 +68,6 @@ public class PlayerControl : NetworkBehaviour
                 moveDirection += playerCamera.transform.right;
                 anim.SetBool("Walk", true);
             }
-            // if (Input.GetKeyDown(KeyCode.Space)) {
-            //     finalSpeed += speed;
-            // }
             if (moveDirection != Vector3.zero) {
                 moveDirection.y = 0;
                 moveDirection.Normalize(); //정규화 (벡터의 크기를 1로로)
@@ -61,14 +81,20 @@ public class PlayerControl : NetworkBehaviour
             anim.SetBool("Walk", false);
         }
     }
-    /*
-    private IEnumerator DecreaseSpeed(float interval) {
-        while (true) {
-            finalSpeed *= 0.5f;
-            yield return new WaitForSeconds(interval);
-        }
+
+    private void Ready() {
+        if (Input.GetKey(KeyCode.Q)) CmdSetReady(true);
+        else CmdSetReady(false);
     }
-    */
+
+    [Command]
+    private void CmdSetReady(bool value) {
+        isReady = value;
+    }
+
+    public bool GetReady() {
+        return isReady;
+    }
 
     public override void OnStartLocalPlayer()
     {
@@ -99,5 +125,6 @@ public class PlayerControl : NetworkBehaviour
 
         MoveCharacter(); // 캐릭터 이동
         RotateCamera(); // 카메라 회전
+        Ready();
     }
 }
