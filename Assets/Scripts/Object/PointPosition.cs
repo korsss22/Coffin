@@ -11,8 +11,7 @@ public class PointPosition : MonoBehaviour
  
     }
 
-    //플레이어가 입장할때마다 플레이어 리스트를 업데이트 할 메소드 추가 필요
-
+  
 
     public Vector3 getAverage()
     {
