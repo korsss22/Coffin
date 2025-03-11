@@ -1491,7 +1491,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   playerCamera: {fileID: 4196725266635563092}
-  speed: 2.02
+  speed: 3.4
   maxSpeed: 0
   jump: 10
   mouseSensitivity: 2.12
