@@ -616,7 +616,7 @@ MonoBehaviour:
   editorAutoStart: 0
   sendRate: 60
   offlineScene: Assets/Scenes/OfflineScene.unity
-  onlineScene: Assets/Scenes/SampleScene.unity
+  onlineScene: Assets/Scenes/OnlineScene.unity
   offlineSceneLoadDelay: 0
   transport: {fileID: 151759965}
   networkAddress: localhost
@@ -645,8 +645,11 @@ MonoBehaviour:
   evaluationMethod: 0
   evaluationInterval: 3
   timeInterpolationGui: 0
+  jointPoint: {fileID: 0}
+  coffinTrans: {fileID: 0}
   Base: {fileID: 0}
   Lid: {fileID: 0}
+  JointPoint: {fileID: 0}
 --- !u!1 &199529746
 GameObject:
   m_ObjectHideFlags: 0

@@ -84,6 +84,11 @@ public class GameManager : NetworkBehaviour
     GameStart();
     isCountDown = false; // 카운트다운 종료 후 상태 초기화
 }
+    [Command]
+    public void TurnIsKinematic(bool value) {
+        MyNetworkManager.instance.Base.GetComponent<Rigidbody>().isKinematic = value;
+        MyNetworkManager.instance.Lid.GetComponent<Rigidbody>().isKinematic = value;
+    }
 
     private void CheckCountDown() {
     if (CheckAllPlayerReady()) {
