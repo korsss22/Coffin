@@ -23,6 +23,8 @@ public class GameManager : NetworkBehaviour
     private Coroutine nowCoroutine;
     public bool isCountDown = false;
 
+    public bool started = false;
+
     private void Awake() {
     // 이미 인스턴스가 존재하면, 새로 만들지 않고 기존 인스턴스를 사용
         if (instance != null && instance != this) {
@@ -129,8 +131,11 @@ public class GameManager : NetworkBehaviour
         // 게임 시작 로직 추가
     }
 
-    private void Update() {
-        CheckCountDown();
-        UpdateTimer();
+    private void LateUpdate() {
+        if (CheckAllPlayerReady && !started)
+        {
+            GameStart();
+            started = false;
+        }
     }
 }

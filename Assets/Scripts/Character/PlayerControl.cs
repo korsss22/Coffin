@@ -114,15 +114,14 @@ public class PlayerControl : NetworkBehaviour
             Debug.LogError("GameManager가 null입니다! GameManager가 씬에 배치되어 있는지 확인하세요.");
             return; // GameManager가 없으면 함수 종료
         }
-        if (Input.GetKey(KeyCode.Q)) {
+        if (Input.GetKeyDown(KeyCode.Q)) {
             if (!isReady) {
                 GameManager.instance.readyPlayers++;
                 isReady = true;
             }
-        } else {
-            if (isReady) {
+            else
+            {
                 GameManager.instance.readyPlayers--;
-                isReady = false;
             }
         }
         
