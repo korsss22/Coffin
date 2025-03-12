@@ -74,15 +74,15 @@ public class PlayerControl : NetworkBehaviour
             anim.SetBool("walking", false);
         }
 
-        anim.SetFloat("AxisX", h);
-        anim.SetFloat("AxisZ", v);
         
         if(characterController.isGrounded)
         {
+            anim.SetBool("Jump", false);
             yVelocity = -1;
             if(Input.GetKeyDown(KeyCode.Space))
             {
                 yVelocity = jump;
+                anim.SetBool("Jump", true);
             }
         }
         yVelocity +=(gravity*Time.deltaTime);

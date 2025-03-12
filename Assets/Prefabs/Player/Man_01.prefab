@@ -2402,7 +2402,7 @@ MonoBehaviour:
   cameraTransform: {fileID: 7691133552023542164}
   characterController: {fileID: 4408660685283096029}
   yVelocity: 0
-  speed: 10
+  speed: 6
   maxSpeed: 10
   jump: 10
   mouseSensitivity: 2.12
