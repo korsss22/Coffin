@@ -54,6 +54,7 @@ public class PlayerControl : NetworkBehaviour
         xRotation -= mouseY;
         yRotation += mouseX;
         playerCamera.transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+        transform.rotation = Quaternion.Euler(0, yRotation, 0);
     }
 
     // 캐릭터 애니메이션 및 방향 전환 함수
@@ -63,6 +64,15 @@ public class PlayerControl : NetworkBehaviour
         Vector3 moveDirection = new Vector3(h,0,v);
         moveDirection = cameraTransform.TransformDirection(moveDirection);
         moveDirection *= speed;
+
+        if (h != 0 || v != 0)
+        {
+            anim.SetBool("walking", true);
+        }
+        else
+        {
+            anim.SetBool("walking", false);
+        }
 
         anim.SetFloat("AxisX", h);
         anim.SetFloat("AxisZ", v);
