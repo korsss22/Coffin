@@ -8,7 +8,7 @@ public class MyNetworkManager : NetworkManager
     public static MyNetworkManager instance {get; private set;} 
     private const string START_POSITION = "StartPoint";
     private const string END_POSITION = "EndPoint";
-    private GameObject startPositionObject;
+    private GameObject startPositionObject; 
     private GameObject endPositionObject;
     private Vector3 spawnPosition;
     private GameObject coffin;
@@ -49,14 +49,15 @@ public class MyNetworkManager : NetworkManager
         Base = coffinTrans.Find("Base").gameObject;
         Lid = coffinTrans.Find("Lid").gameObject;
         
-        Base.GetComponent<Rigidbody>().isKinematic = true;
-        Lid.GetComponent<Rigidbody>().isKinematic = true;
+        GameManager.instance.TurnIsKinematic(true);
     }
 
     private void SetUI() {
         GameManager.instance.CreateObjectOnCanvas(GameManager.instance.timerText);
         GameManager.instance.timerText.SetActive(false);
     }
+
+    
 
     public GameObject SpawnPrefab(string objectName, Vector3 spawnLocation) {
         GameObject selectedObject = null;
