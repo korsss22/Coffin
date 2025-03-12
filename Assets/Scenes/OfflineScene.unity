@@ -645,6 +645,8 @@ MonoBehaviour:
   evaluationMethod: 0
   evaluationInterval: 3
   timeInterpolationGui: 0
+  Base: {fileID: 0}
+  Lid: {fileID: 0}
 --- !u!1 &199529746
 GameObject:
   m_ObjectHideFlags: 0
@@ -3425,6 +3427,7 @@ MonoBehaviour:
   countTime: 3
   timer: 0
   readyPlayers: 0
+  isCountDown: 0
 --- !u!4 &1935041212
 Transform:
   m_ObjectHideFlags: 0

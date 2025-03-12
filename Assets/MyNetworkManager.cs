@@ -5,19 +5,28 @@ using UnityEngine;
 
 public class MyNetworkManager : NetworkManager
 {
+    public static MyNetworkManager instance {get; private set;} 
     private const string START_POSITION = "StartPoint";
     private const string END_POSITION = "EndPoint";
     private GameObject startPositionObject;
     private GameObject endPositionObject;
     private Vector3 spawnPosition;
     private GameObject coffin;
-    private GameObject jointPoint;
-    Transform coffinTrans;
+    public GameObject jointPoint;
+    public Transform coffinTrans;
     public GameObject Base;
     public GameObject Lid;
+    public GameObject JointPoint;
+    private void Awake()
+    {
+        base.Awake();
+        if (instance == null) {
+            instance = this;
+        } else {
+            Destroy(gameObject);
+        }    
+    }
 
-
-    public static MyNetworkManager instance {get; private set;} 
 
     private void FindStartPosition() {
         startPositionObject = GameObject.Find(START_POSITION);
@@ -34,7 +43,7 @@ public class MyNetworkManager : NetworkManager
         Vector3 coffinPos = spawnPosition + new Vector3(0, 1.8f, 0);
 
         coffin = SpawnPrefab("Coffin_Black", coffinPos);
-        GameObject jointPoint = SpawnPrefab("JointPoint", spawnPosition);
+        jointPoint = SpawnPrefab("JointPoint", spawnPosition);
 
         coffinTrans = coffin.transform;
         Base = coffinTrans.Find("Base").gameObject;

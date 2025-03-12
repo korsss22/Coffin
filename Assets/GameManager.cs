@@ -114,9 +114,13 @@ public class GameManager : NetworkBehaviour
         Debug.Log("Game Start!!!");
         timerText.SetActive(false);
 
+        if (MyNetworkManager.instance == null) {
+            Debug.LogError("instance is null!");
+        }
         MyNetworkManager.instance.Base.GetComponent<Rigidbody>().isKinematic = false;
-        MyNetworkManager.instance.Base.GetComponent<Rigidbody>().isKinematic = false;
-        
+        MyNetworkManager.instance.Lid.GetComponent<Rigidbody>().isKinematic = false;
+        MyNetworkManager.instance.Base.GetComponent<ConfigurableJoint>().connectedBody =
+        MyNetworkManager.instance.jointPoint.GetComponent<Rigidbody>();
         // 게임 시작 로직 추가
     }
 
