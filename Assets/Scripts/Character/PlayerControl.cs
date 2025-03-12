@@ -64,12 +64,8 @@ public class PlayerControl : NetworkBehaviour
         moveDirection = cameraTransform.TransformDirection(moveDirection);
         moveDirection *= speed;
 
-        if(h != 0 || v != 0){
-            anim.SetBool("Walk", true);
-        }
-        else{
-            anim.SetBool("Walk", false);
-        }
+        anim.SetFloat("AxisX", h);
+        anim.SetFloat("AxisZ", v);
         
         if(characterController.isGrounded)
         {
