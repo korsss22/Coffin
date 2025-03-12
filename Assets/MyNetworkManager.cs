@@ -10,6 +10,14 @@ public class MyNetworkManager : NetworkManager
     private GameObject startPositionObject;
     private GameObject endPositionObject;
     private Vector3 spawnPosition;
+    private GameObject coffin;
+    private GameObject jointPoint;
+    Transform coffinTrans;
+    public GameObject Base;
+    public GameObject Lid;
+
+
+    public static MyNetworkManager instance {get; private set;} 
 
     private void FindStartPosition() {
         startPositionObject = GameObject.Find(START_POSITION);
@@ -25,9 +33,20 @@ public class MyNetworkManager : NetworkManager
     private void SetGame() {
         Vector3 coffinPos = spawnPosition + new Vector3(0, 1.8f, 0);
 
-        GameObject coffin = SpawnPrefab("Coffin_Black", coffinPos);
-
+        coffin = SpawnPrefab("Coffin_Black", coffinPos);
         GameObject jointPoint = SpawnPrefab("JointPoint", spawnPosition);
+
+        coffinTrans = coffin.transform;
+        Base = coffinTrans.Find("Base").gameObject;
+        Lid = coffinTrans.Find("Lid").gameObject;
+        
+        Base.GetComponent<Rigidbody>().isKinematic = true;
+        Lid.GetComponent<Rigidbody>().isKinematic = true;
+    }
+
+    private void SetUI() {
+        GameManager.instance.CreateObjectOnCanvas(GameManager.instance.timerText);
+        GameManager.instance.timerText.SetActive(false);
     }
 
     public GameObject SpawnPrefab(string objectName, Vector3 spawnLocation) {
@@ -67,5 +86,6 @@ public class MyNetworkManager : NetworkManager
 
         FindStartPosition();
         SetGame();
+        SetUI();
     }
 }

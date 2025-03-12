@@ -2401,10 +2401,13 @@ MonoBehaviour:
   playerCamera: {fileID: 5069568520362139183}
   speed: 3.4
   maxSpeed: 0
-  jump: 10
+  jump: 125
   mouseSensitivity: 2.12
   scaleRatio: 0.99
-  gameManager: {fileID: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  groundCheckDistance: 0.1
 --- !u!114 &4492026192568896500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2470,7 +2473,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &7443634056202403443
 CapsuleCollider:

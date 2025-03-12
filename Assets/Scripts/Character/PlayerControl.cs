@@ -20,6 +20,10 @@ public class PlayerControl : NetworkBehaviour
     private Animator anim;
     private bool isReady = false;
 
+    public LayerMask groundLayer;
+public float groundCheckDistance = 0.1f;
+private bool isGrounded;
+
     //Rigidbody 컴포넌트를 담을 전역변수
     private Rigidbody rb;
 
@@ -100,7 +104,7 @@ public class PlayerControl : NetworkBehaviour
         */
 
        
-        if(Input.GetKeyDown(KeyCode.Space)){
+        if(isGrounded && Input.GetKeyDown(KeyCode.Space)){
             rb.AddForce(transform.up * jump, ForceMode.Impulse);
         }
 
@@ -162,6 +166,8 @@ public class PlayerControl : NetworkBehaviour
 
     void Update(){ //매 프레임마다 한 번 호출. 사용자 입력 처리, 애니메이션 업데이트, 게임 로직 등을 처리할 때 사용
         if(!isLocalPlayer) return;
+
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer);
 
         CharacterUpdate();
         Ready();
