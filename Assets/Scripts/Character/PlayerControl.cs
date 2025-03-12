@@ -3,6 +3,9 @@ using Mirror;
 public class PlayerControl : NetworkBehaviour
 {
     public GameObject playerCamera;
+    public Transform cameraTransform;
+    public CharacterController characterController;
+    public float yVelocity = 0;
 
     [Range(0.0f, 10.0f)]
     public float speed;
@@ -14,15 +17,13 @@ public class PlayerControl : NetworkBehaviour
     public float mouseSensitivity;
     [Range(0.0f, 10f)]
     public float scaleRatio =0.0f;
+    public float gravity = -20f;
 
     private float xRotation = 0f;
     private float yRotation = 0f;
     private Animator anim;
     private bool isReady = false;
 
-    public LayerMask groundLayer;
-public float groundCheckDistance = 0.1f;
-private bool isGrounded;
 
     //Rigidbody 컴포넌트를 담을 전역변수
     private Rigidbody rb;
@@ -57,37 +58,30 @@ private bool isGrounded;
 
     // 캐릭터 애니메이션 및 방향 전환 함수
     private void CharacterUpdate() {
-        Vector3 moveDirection = Vector3.zero;
-        if (Input.anyKey) {
-            if (Input.GetKey(KeyCode.W)) {
-                moveDirection += playerCamera.transform.forward;
-                anim.SetBool("Walk", true);
-            }
-            if (Input.GetKey(KeyCode.A)) {
-                moveDirection += -playerCamera.transform.right;
-                anim.SetBool("Walk", true);
-            }
-            if (Input.GetKey(KeyCode.S)) {
-                moveDirection += -playerCamera.transform.forward;
-                anim.SetBool("Walk", true);
-            }
-            if (Input.GetKey(KeyCode.D)) {
-                moveDirection += playerCamera.transform.right;
-                anim.SetBool("Walk", true);
-            }
-            if (moveDirection != Vector3.zero) {
-                moveDirection.y = 0;
-                moveDirection.Normalize(); //정규화 (벡터의 크기를 1로로)
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+        Vector3 moveDirection = new Vector3(h,0,v);
+        moveDirection = cameraTransform.TransformDirection(moveDirection);
+        moveDirection *= speed;
 
-                Quaternion toRotation = Quaternion.LookRotation(moveDirection);
-                transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, Time.deltaTime * 10f); //부드럽게 회전전
-
-                transform.position += Time.deltaTime * speed * moveDirection;   //벡터를 가장 나중에, 작은 값을 먼저 계산하는게 이득득
-
-            }
-        } else {
+        if(h != 0 || v != 0){
+            anim.SetBool("Walk", true);
+        }
+        else{
             anim.SetBool("Walk", false);
         }
+        
+        if(characterController.isGrounded)
+        {
+            yVelocity = -1;
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                yVelocity = jump;
+            }
+        }
+        yVelocity +=(gravity*Time.deltaTime);
+        moveDirection.y=yVelocity;
+        characterController.Move(moveDirection*Time.deltaTime);
     }
 
     //캐릭터 움직임 구현 함수
@@ -103,10 +97,7 @@ private bool isGrounded;
             기존에 오브젝트가 받고있던 물리법칙 무시
         */
 
-       
-        if(isGrounded && Input.GetKeyDown(KeyCode.Space)){
-            rb.AddForce(transform.up * jump, ForceMode.Impulse);
-        }
+    
 
     }
 
@@ -154,20 +145,18 @@ private bool isGrounded;
        // StartCoroutine(DecreaseSpeed(0.5f));
 
         //Rigidbody 변수 설정
-        rb = gameObject.GetComponent<Rigidbody>();
+        //rb = gameObject.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
-    void FixedUpdate() { //고정된 시간 간격마다 호출. 물리 엔진 업데이트와 동기화, 물리 계산을 처리하는데 사용. 물리 기반 움직임이나 충돌.
-        if (!isLocalPlayer) return;
+    // void FixedUpdate() { //고정된 시간 간격마다 호출. 물리 엔진 업데이트와 동기화, 물리 계산을 처리하는데 사용. 물리 기반 움직임이나 충돌.
+    //     if (!isLocalPlayer) return;
 
-        CharacterMove();
-    }
+    //     CharacterUpdate();
+    // }
 
     void Update(){ //매 프레임마다 한 번 호출. 사용자 입력 처리, 애니메이션 업데이트, 게임 로직 등을 처리할 때 사용
         if(!isLocalPlayer) return;
-
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer);
 
         CharacterUpdate();
         Ready();
