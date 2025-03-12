@@ -2321,6 +2321,7 @@ GameObject:
   - component: {fileID: 6959892821369414655}
   - component: {fileID: 7443634056202403443}
   - component: {fileID: 4408660685283096029}
+  - component: {fileID: 854480476259433208}
   m_Layer: 0
   m_Name: Man_01
   m_TagString: Player
@@ -2491,6 +2492,23 @@ CharacterController:
   m_SkinWidth: 0.0001
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!114 &854480476259433208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6614868516517378281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 1
+  syncMode: 0
+  syncInterval: 0
+  clientAuthority: 0
+  animator: {fileID: 461416267218384937}
 --- !u!1 &6659876223126420400
 GameObject:
   m_ObjectHideFlags: 0
