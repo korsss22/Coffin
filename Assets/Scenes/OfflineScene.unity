@@ -624,7 +624,7 @@ MonoBehaviour:
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 2858590657992640146, guid: c9affe9e8dca0824d944038290f57650, type: 3}
+  playerPrefab: {fileID: 6614868516517378281, guid: a88b653b86366794d95e68534e1a9f8b, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs:
@@ -3422,6 +3422,9 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   timerText: {fileID: 2246984685904408832, guid: feae3434bb8e28143a38869bf78075a6, type: 3}
+  countTime: 3
+  timer: 0
+  readyPlayers: 0
 --- !u!4 &1935041212
 Transform:
   m_ObjectHideFlags: 0

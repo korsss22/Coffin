@@ -8,11 +8,13 @@ using Unity.VisualScripting;
 using System.Security.Cryptography;
 using UnityEngine.PlayerLoop;
 using System.Runtime.Remoting;
+using Mirror;
 
 public class DisplayLobbyInfo : MonoBehaviour
 {
     public TextMeshProUGUI id;
     public TextMeshProUGUI pw;
+    public TextMeshProUGUI ready;
     public GameObject infoPanel; 
     private bool panelState;
     public LobbyDataSO dataSO;
@@ -24,6 +26,11 @@ public class DisplayLobbyInfo : MonoBehaviour
         }
     }
 
+    private void PrintPlayerReady() {
+        ready.text = GameManager.instance.readyPlayers +" / "+ NetworkServer.connections.Count;
+    }
+
+
     private void Start() {
         if (dataSO == null) return;
         id.text = dataSO.LobbyID;
@@ -32,6 +39,7 @@ public class DisplayLobbyInfo : MonoBehaviour
 
     private void Update() {
         ToggleInfo();
+        PrintPlayerReady();
     }
 }
 

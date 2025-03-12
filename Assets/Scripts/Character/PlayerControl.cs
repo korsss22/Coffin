@@ -8,19 +8,16 @@ public class PlayerControl : NetworkBehaviour
     public float speed;
     [Range(0.0f, 10.0f)]
     public float maxSpeed;
-    [Range(0.0f, 10.0f)]
+    [Range(0.0f, 1000.0f)]
     public float jump;
-
     [Range(0.0f, 10.0f)]
     public float mouseSensitivity;
-
     [Range(0.0f, 10f)]
     public float scaleRatio =0.0f;
+
     private float xRotation = 0f;
     private float yRotation = 0f;
     private Animator anim;
-
-    [SyncVar]
     private bool isReady = false;
 
     //Rigidbody 컴포넌트를 담을 전역변수
@@ -102,12 +99,7 @@ public class PlayerControl : NetworkBehaviour
             기존에 오브젝트가 받고있던 물리법칙 무시
         */
 
-        float speedX = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
-        float speedZ = Input.GetAxis("Vertical") * speed * Time.deltaTime;
-        if(true){
-            rb.AddForce(speedX, 0, speedZ);
-        }
-
+       
         if(Input.GetKeyDown(KeyCode.Space)){
             rb.AddForce(transform.up * jump, ForceMode.Impulse);
         }
@@ -115,18 +107,24 @@ public class PlayerControl : NetworkBehaviour
     }
 
     //게임 준비 키(Q)
-    private void Ready() {
-        if (Input.GetKey(KeyCode.Q)) CmdSetReady(true);
-        else CmdSetReady(false);
-    }
-
     [Command]
-    private void CmdSetReady(bool value) {
-        isReady = value;
-    }
-
-    public bool GetReady() {
-        return isReady;
+    private void Ready() {
+        if (GameManager.instance == null) {
+            Debug.LogError("GameManager가 null입니다! GameManager가 씬에 배치되어 있는지 확인하세요.");
+            return; // GameManager가 없으면 함수 종료
+        }
+        if (Input.GetKey(KeyCode.Q)) {
+            if (!isReady) {
+                GameManager.instance.readyPlayers++;
+                isReady = true;
+            }
+        } else {
+            if (isReady) {
+                GameManager.instance.readyPlayers--;
+                isReady = false;
+            }
+        }
+        
     }
 
     public override void OnStartLocalPlayer()
@@ -152,14 +150,14 @@ public class PlayerControl : NetworkBehaviour
        // StartCoroutine(DecreaseSpeed(0.5f));
 
         //Rigidbody 변수 설정
-        rb = GetComponent<Rigidbody>();
+        rb = gameObject.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void FixedUpdate() { //고정된 시간 간격마다 호출. 물리 엔진 업데이트와 동기화, 물리 계산을 처리하는데 사용. 물리 기반 움직임이나 충돌.
         if (!isLocalPlayer) return;
 
-        //CharacterMove();
+        CharacterMove();
     }
 
     void Update(){ //매 프레임마다 한 번 호출. 사용자 입력 처리, 애니메이션 업데이트, 게임 로직 등을 처리할 때 사용

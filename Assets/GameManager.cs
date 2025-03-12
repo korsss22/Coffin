@@ -1,134 +1,50 @@
-using System.CodeDom;
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Mirror;
-using Steamworks;
-using TMPro;
-using Unity.Networking.Transport.Utilities;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
+using Mirror;
 using UnityEngine.UI;
 
-public class GameManager : NetworkBehaviour {
-    private List<GameObject> spawnablePrefabs;
-    public GameObject timerText;
-    private GameObject Coffin = null;
-    private GameObject JointPoint;
+public class GameManager : NetworkBehaviour
+{
+    public static GameManager instance {get; private set;} 
 
-    private Transform CoffinBase;
-    private Transform CoffinLid;
-    private Rigidbody baseRb;
-    private Rigidbody lidRb;
-    private Coroutine nowCoroutine;
-    private bool isCoroutine = false;
-    private bool gameStarted = false;
+    public Text timerText; // UI 텍스트 (로컬에서만 사용)
 
-    private void Start() {
-        spawnablePrefabs =NetworkManager.singleton.spawnPrefabs;
-        Coffin = SpawnPrefab("Coffin_Black", new Vector3(0, 1.8f, 0));
-        JointPoint = SpawnPrefab("JointPoint", new Vector3(0,0,0));
-        CoffinBase = Coffin.transform.Find("Base");
-        CoffinLid = Coffin.transform.Find("Lid");
-        
-        baseRb = CoffinBase.GetComponent<Rigidbody>();
-        lidRb = CoffinLid.GetComponent<Rigidbody>();
-        baseRb.isKinematic = true;
-        lidRb.isKinematic = true;
+    [Range(1f, 10f)]
+    public int countTime = 3;
+    private Coroutine countdownCoroutine;
 
-        togglePanel(false);
+    [SyncVar]
+    public float timer = 0f; // 서버에서 동기화되는 타이머 값
 
-        
-    }
+    [SyncVar(hook = nameof(OnReadyUpdated))]
+    public int readyPlayers = 0; // Q 버튼을 누르고 있는 플레이어 수
 
-    [Server]
-    private bool CheckAllReady() {
-        bool allReady = false;
-        foreach (NetworkConnectionToClient player in NetworkServer.connections.Values) {
-            // player.identity가 null일 수 있기 때문에 null 체크 추
-            if (player.identity == null) continue; // identity가 없으면 해당 플레이어를 건너뛰고 계속 진행
-            allReady = true;
-            PlayerControl playerControl = player.identity.gameObject.GetComponent<PlayerControl>();
-                
-            if (playerControl != null && playerControl.GetReady() == false) {
-                allReady = false;
-            }
-        }
-        return allReady;
-    }
-
-    [Server]
-    private void StartCountDown(float countTime) {
-        if (CheckAllReady()) {// 모두 준비했고
-            if (isCoroutine) { //코루틴 실행 중 아닐때
-                isCoroutine = true;
-                togglePanel(true);
-                nowCoroutine = StartCoroutine(CountDownCoroutine(countTime));
-            }
+    private void Awake() {
+    // 이미 인스턴스가 존재하면, 새로 만들지 않고 기존 인스턴스를 사용
+        if (instance != null && instance != this) {
+            Destroy(gameObject); // 다른 GameManager가 이미 존재하는 경우 현재 객체를 파괴
         } else {
-            if (isCoroutine) {
-                isCoroutine = false;
-                togglePanel(false);
-                StopCoroutine(nowCoroutine);
-            }
+            instance = this; // 현재 인스턴스를 설정
+            DontDestroyOnLoad(gameObject); // 씬이 변경되더라도 객체가 파괴되지 않도록 설정
+        }
+    }
+
+
+    private void OnReadyUpdated(int oldCount, int newCount) {
+        readyPlayers = newCount;
+        Debug.Log("ReadyPlayerCount : "+readyPlayers);
+    }
+
+    private void CheckAllPlayerReady() {
+        if (readyPlayers == NetworkServer.connections.Count) {
+            //StartCoroutine(countdownCoroutine(countTime));
         }
     }
 
     [Server]
-    private IEnumerator CountDownCoroutine(float countTIme) {
-        float currentTime = countTIme;
-        while(currentTime > 0f) {
-            UpdateText(currentTime);
-            yield return new WaitForSeconds(1f);
-            currentTime -= 1f;
-        }
-        GameStart();
-    }
-
-    [ClientRpc]
-    private void GameStart() {
-        Debug.Log("Start!!");
-        baseRb.isKinematic = false;
-        lidRb.isKinematic = false;
-        Coffin.GetComponent<ConfigurableJoint>().connectedBody = JointPoint.GetComponent<Rigidbody>();
-    }
-
-    [ClientRpc]
-    private void togglePanel(bool value) {
-        timerText.SetActive(value);
-    }
-
-    [ClientRpc]
-    private void UpdateText(float currentTime) {
-        timerText.GetComponent<TextMeshProUGUI>().text = currentTime.ToString("0");
-    }
-
-    public GameObject SpawnPrefab(string objectName, Vector3 spawnLocation) {
-        GameObject selectedObject = null;
-
-        foreach (GameObject obj in spawnablePrefabs) {
-            if (obj.name == objectName) {
-                selectedObject = obj;
-                break;
-            }
-        }
-
-        if (selectedObject == null) {
-            Debug.LogError("prefab no found with name : "+objectName);
-            return null;
-        }
-
-        GameObject instantiatedObject = Instantiate(selectedObject, spawnLocation, Quaternion.identity);
-
-        NetworkServer.Spawn(instantiatedObject);
-
-        return instantiatedObject;
-    }
-
-    private void Update() {
-        if (!gameStarted && isServer) {
-            StartCountDown(3f);
-        } 
+    private void GameStart()
+    {
+        Debug.Log("Game Start!!!");
+        // 게임 시작 로직 추가
     }
 }
