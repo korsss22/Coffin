@@ -5,37 +5,24 @@ using UnityEngine;
 public class PointPosition : MonoBehaviour
 {
     public GameObject[] playerList;
-    // Start is called before the first frame update
-    void Start()
-    {
- 
-    }
 
-  
-
-    public Vector3 getAverage()
-    {
+    private Vector3 GetAvgVec() {
         playerList = GameObject.FindGameObjectsWithTag("Player");
         int listLength = playerList.Length;
-        Vector3 avVector = new Vector3(0, 0, 0);
-
-        for (int i = 0; i < listLength; i++)
-        {
-            avVector += playerList[i].transform.position;
+        Vector3 avgVec = new Vector3(0,0,0);
+        for (int i = 0; i < listLength; i++) {
+             avgVec += playerList[i].transform.position;
         }
-
-        if (listLength == 0)
-        {
-            return new Vector3(0f, 0f, 0f);
-        }
-
-        return avVector / listLength;
+        return avgVec/listLength;
     }
 
-    // Update is called once per frame
+    void Start()
+    {
+        
+    }
+
     void FixedUpdate()
     {
-        this.transform.position = getAverage() + new Vector3(0f, 1.8f, 0f);
-
+        gameObject.transform.position = GetAvgVec() + new Vector3(0, 1.8f, 0);
     }
 }

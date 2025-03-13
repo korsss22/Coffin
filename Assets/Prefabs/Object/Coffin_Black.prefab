@@ -14,8 +14,12 @@ GameObject:
   - component: {fileID: 5587812294155774414}
   - component: {fileID: 5577912653939842711}
   - component: {fileID: 5577912653939842710}
+<<<<<<< Updated upstream
   - component: {fileID: 2579729591727080913}
   - component: {fileID: 3077213127771201963}
+=======
+  - component: {fileID: 987602357412836096}
+>>>>>>> Stashed changes
   m_Layer: 0
   m_Name: Base
   m_TagString: Untagged
@@ -95,7 +99,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5578613589711882480}
-  m_Material: {fileID: 13400000, guid: 4681164211ba3e44c9f9bb23b9ff7759, type: 2}
+  m_Material: {fileID: 13400000, guid: 0151b31279cbbe64db23577e9163731a, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
@@ -110,14 +114,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5578613589711882480}
   serializedVersion: 2
-  m_Mass: 20
+  m_Mass: 37
   m_Drag: 3
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!153 &5577912653939842710
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -125,12 +129,12 @@ ConfigurableJoint:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5578613589711882480}
-  m_ConnectedBody: {fileID: 0}
+  m_ConnectedBody: {fileID: 4577073097922555320, guid: d502450bc0c895a4d80437ace99af997, type: 3}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0.733253, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 0.83325315, z: 0}
+  m_ConnectedAnchor: {x: 0, y: 0.733253, z: 0}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -214,7 +218,7 @@ ConfigurableJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
---- !u!114 &2579729591727080913
+--- !u!114 &987602357412836096
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -223,10 +227,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5578613589711882480}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb803efbe62c34d7baece46c9ffebad9, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ff3ba0becae47b8b9381191598957c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 1
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0
   target: {fileID: 5577303501817697510}
@@ -292,10 +296,13 @@ GameObject:
   m_Component:
   - component: {fileID: 5577303502780353124}
   - component: {fileID: -8152075712549876236}
+<<<<<<< Updated upstream
   - component: {fileID: 7715756466197754188}
+=======
+>>>>>>> Stashed changes
   m_Layer: 0
   m_Name: Coffin_Black
-  m_TagString: Untagged
+  m_TagString: Coffin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -334,6 +341,7 @@ MonoBehaviour:
   serverOnly: 0
   visibility: 0
   hasSpawned: 0
+<<<<<<< Updated upstream
 --- !u!114 &7715756466197754188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,6 +376,8 @@ MonoBehaviour:
   positionSensitivity: 0.01
   rotationSensitivity: 0.01
   scaleSensitivity: 0.01
+=======
+>>>>>>> Stashed changes
 --- !u!1 &5578613590315369530
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,8 +391,12 @@ GameObject:
   - component: {fileID: 5564492433124916502}
   - component: {fileID: 5587812294287674406}
   - component: {fileID: 5577912654057137317}
+<<<<<<< Updated upstream
   - component: {fileID: 3714068194233489240}
   - component: {fileID: 2927850685770790325}
+=======
+  - component: {fileID: 2430504484417239793}
+>>>>>>> Stashed changes
   m_Layer: 0
   m_Name: Lid
   m_TagString: Untagged
@@ -477,7 +491,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5578613590315369530}
   serializedVersion: 2
-  m_Mass: 10
+  m_Mass: 13
   m_Drag: 3
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -485,7 +499,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3714068194233489240
+--- !u!114 &2430504484417239793
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -494,10 +508,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5578613590315369530}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb803efbe62c34d7baece46c9ffebad9, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ff3ba0becae47b8b9381191598957c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 1
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0
   target: {fileID: 5577303504782566016}

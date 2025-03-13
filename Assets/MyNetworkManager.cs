@@ -5,97 +5,44 @@ using UnityEngine;
 
 public class MyNetworkManager : NetworkManager
 {
-    public static MyNetworkManager instance {get; private set;} 
-    private const string START_POSITION = "StartPoint";
-    private const string END_POSITION = "EndPoint";
-    private GameObject startPositionObject; 
-    private GameObject endPositionObject;
-    private Vector3 spawnPosition;
-    private GameObject coffin;
-    public GameObject jointPoint;
-    public Transform coffinTrans;
-    public GameObject Base;
-    public GameObject Lid;
-    public GameObject JointPoint;
-    private void Awake()
+    public static MyNetworkManager instance {get; private set;}
+
+    private GameObject startPoint;
+    private GameObject endPoint;
+
+    void Awake()
     {
         base.Awake();
-        if (instance == null) {
-            instance = this;
-        } else {
+        if (instance != null && instance != this) {
             Destroy(gameObject);
-        }    
+            return;
+        } 
+            instance = this;
+            DontDestroyOnLoad(gameObject);
     }
 
-
-    private void FindStartPosition() {
-        startPositionObject = GameObject.Find(START_POSITION);
-        endPositionObject = GameObject.Find(END_POSITION);
-        if (startPositionObject == null) {
-            Debug.Log("startPositionObject is null");
-            return; 
-        }
-        spawnPosition = startPositionObject.transform.position;
-        Debug.Log("StartPosition : "+spawnPosition);
-    }
-
-    private void SetGame() {
-        Vector3 coffinPos = spawnPosition + new Vector3(0, 1.8f, 0);
-
-        coffin = SpawnPrefab("Coffin_Black", coffinPos);
-        jointPoint = SpawnPrefab("JointPoint", spawnPosition);
-
-        coffinTrans = coffin.transform;
-        Base = coffinTrans.Find("Base").gameObject;
-        Lid = coffinTrans.Find("Lid").gameObject;
-        
-        GameManager.instance.TurnIsKinematic(true);
-    }
-
-    private void SetUI() {
-        GameManager.instance.CreateObjectOnCanvas(GameManager.instance.timerText);
-        GameManager.instance.timerText.SetActive(false);
-    }
-
-    
-
-    public GameObject SpawnPrefab(string objectName, Vector3 spawnLocation) {
-        GameObject selectedObject = null;
-
-        foreach (GameObject obj in spawnPrefabs) {
-            if (obj.name == objectName) {
-                selectedObject = obj;
-                break;
-            }
-        }
-
-        if (selectedObject == null) {
-            Debug.LogError("prefab no found with name : "+objectName);
-            return null;
-        }
-
-        GameObject instantiatedObject = Instantiate(selectedObject, spawnLocation, Quaternion.identity);
-
-        NetworkServer.Spawn(instantiatedObject);
-
-        return instantiatedObject;
-    }
-
-    public override void OnServerAddPlayer(NetworkConnectionToClient conn) //플레이어가 추가될때 실행되는 콜백.
+    public override void OnServerChangeScene(string newSceneName) //씬 바꿀때 콜
     {
-        GameObject player = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
+        base.OnServerChangeScene(newSceneName);
+    }
 
+    public override void OnServerSceneChanged(string sceneName) //씬 로드가 완전 끝났을때
+    {
+        base.OnServerSceneChanged(sceneName);
+
+        startPoint = GameObject.FindGameObjectWithTag("StartPoint");
+        endPoint = GameObject.FindGameObjectWithTag("EndPoint");
+
+        Vector3 coffinVec = startPoint.transform.position + new Vector3(0, 2.1f, 0);
+        GameObject Coffin = GameManager.instance.SpawnNetworkObject("Coffin_Black", coffinVec, startPoint.transform.rotation);
+        Coffin.transform.Find("Base").gameObject.GetComponent<Rigidbody>().isKinematic = true;
+        GameManager.instance.SpawnNetworkObject("JointPoint", startPoint.transform.position, startPoint.transform.rotation);
+    }
+
+    public override void OnServerAddPlayer(NetworkConnectionToClient conn) // 플레이어가 추가될때 콜백
+    {
+        GameObject player = Instantiate(playerPrefab, startPoint.transform.position, startPoint.transform.rotation);
         NetworkServer.AddPlayerForConnection(conn, player);
-
-        Debug.Log(player.name + "가 로비에 참가함! 위치 : "+player.transform.position);
-    }
-
-    public override void OnServerSceneChanged(string newSceneName) //서버 씬이 Change 완료 했을때 실행되는 콜백
-    {
-        base.OnServerSceneChanged(newSceneName);
-
-        FindStartPosition();
-        SetGame();
-        SetUI();
+        Debug.Log(player.name+"가 참여함! 위치 : "+startPoint.transform.position);
     }
 }

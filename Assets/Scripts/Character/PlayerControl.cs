@@ -107,6 +107,7 @@ public class PlayerControl : NetworkBehaviour
 
     }
 
+<<<<<<< Updated upstream
     //게임 준비 키(Q)
     [Command]
     private void Ready() {
@@ -126,6 +127,9 @@ public class PlayerControl : NetworkBehaviour
         }
         
     }
+=======
+    
+>>>>>>> Stashed changes
 
     public override void OnStartLocalPlayer()
     {
@@ -142,6 +146,37 @@ public class PlayerControl : NetworkBehaviour
             name = $"Player[{netId}|server]";
         }
 
+    private void CheckReady() {
+        if (Input.GetKeyDown(KeyCode.Q)) {
+            CmdReadyUp();
+        }
+        if (Input.GetKeyUp(KeyCode.Q)) {
+            CmdReadyDown();
+        }
+    }
+
+    [Command]
+    private void CmdReadyUp() {
+        if (GameManager.instance == null) { Debug.LogError("GameManager가 Null이에요...ㅠㅠ"); return; };
+        GameManager.instance.readyPlayer++;
+    }
+
+    [Command]
+    private void CmdReadyDown() {
+        if (GameManager.instance == null) { Debug.LogError("GameManager가 Null이에요...ㅠㅠ"); return; }
+        GameManager.instance.readyPlayer--;
+    }
+
+    [Command]
+    private void CmdStartGame() {
+        RpcStartGame();
+    }
+
+    [ClientRpc]
+    private void RpcStartGame() {
+        GameManager.instance.GameStart();
+    }
+    
     // Start is called before the first frame update
     void Start() {
         gameObject.TryGetComponent(out Animator animator);
@@ -162,9 +197,11 @@ public class PlayerControl : NetworkBehaviour
 
     void Update(){ //매 프레임마다 한 번 호출. 사용자 입력 처리, 애니메이션 업데이트, 게임 로직 등을 처리할 때 사용
         if(!isLocalPlayer) return;
-
+        if (GameManager.instance.readyPlayer == NetworkServer.connections.Count && NetworkServer.connections.Count != 0) {
+            CmdStartGame();
+        }
+        CheckReady();
         CharacterUpdate();
-        Ready();
     }
 
     void LateUpdate(){ // 모든 Update 메소드가 호출된 후 매 프레임마다 한 번씩 호출. 카메라를 위치시키는 카메라 추적의 경우 사용.

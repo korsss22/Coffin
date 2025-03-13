@@ -27,7 +27,7 @@ public class DisplayLobbyInfo : MonoBehaviour
     }
 
     private void PrintPlayerReady() {
-        ready.text = GameManager.instance.readyPlayers +" / "+ NetworkServer.connections.Count;
+        ready.text = GameManager.instance.readyPlayer +" / "+ NetworkServer.connections.Count;
     }
 
 
