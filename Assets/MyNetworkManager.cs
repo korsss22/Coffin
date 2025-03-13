@@ -34,7 +34,7 @@ public class MyNetworkManager : NetworkManager
         endPoint = GameObject.FindGameObjectWithTag("EndPoint");
 
         Vector3 coffinVec = startPoint.transform.position + new Vector3(0, 2.1f, 0);
-        GameObject Coffin = GameManager.instance.SpawnNetworkObject("Coffin_Black", coffinVec, startPoint.transform.rotation);
+        GameObject Coffin = GameManager.instance.SpawnNetworkObject("Coffin_Brown", coffinVec, startPoint.transform.rotation);
         Coffin.transform.Find("Base").gameObject.GetComponent<Rigidbody>().isKinematic = true;
         GameManager.instance.SpawnNetworkObject("JointPoint", startPoint.transform.position, startPoint.transform.rotation);
     }
