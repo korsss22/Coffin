@@ -37,6 +37,10 @@ public class MyNetworkManager : NetworkManager
         GameObject Coffin = GameManager.instance.SpawnNetworkObject("Coffin_Brown", coffinVec, startPoint.transform.rotation);
         Coffin.transform.Find("Base").gameObject.GetComponent<Rigidbody>().isKinematic = true;
         GameManager.instance.SpawnNetworkObject("JointPoint", startPoint.transform.position, startPoint.transform.rotation);
+
+        UIManager.instance.DisplayLobbyData();
+        UIManager.instance.lobbyData = UIManager.instance.InstantiateAsChild(UIManager.instance.infoPanel, UIManager.instance.GetCanvas().transform);
+        // UIManager.instance.SetTimer();
     }
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn) // 플레이어가 추가될때 콜백

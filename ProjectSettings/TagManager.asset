@@ -7,6 +7,8 @@ TagManager:
   - EndPoint
   - StartPoint
   - Coffin
+  - LobbyInfo
+  - JointPoint
   layers:
   - Default
   - TransparentFX

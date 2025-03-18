@@ -22,7 +22,7 @@ public class GameManager : NetworkBehaviour
     public GameObject coffin;
     public Transform coffin_Base;
     public Transform coffin_Lid;
-    public GameObject jointPoint;
+    private GameObject jointPoint;
     private Coroutine nowCoroutine;
     private void OnReadyPlayerUpdated(int oldValue, int newValue) {
         Debug.Log("readyPlayer의 값이 "+newValue+"가 되었어요!! *^^*");
@@ -41,6 +41,8 @@ public class GameManager : NetworkBehaviour
         } else {
             if (nowCoroutine != null) {
                 StopCoroutine(nowCoroutine);
+                Debug.Log("StopCoroutine");
+                // UIManager.instance.UpdateTimer(timer, 0,false);
             }
         }
     }
@@ -49,6 +51,7 @@ public class GameManager : NetworkBehaviour
         currentTime = countTime;
 
         while (currentTime > 0) {
+            // UIManager.instance.UpdateTimer(timer,currentTime,true);
             yield return new WaitForSeconds(1);
             currentTime -= 1;
         }
@@ -57,29 +60,49 @@ public class GameManager : NetworkBehaviour
     }
 
     private void StartObject() {
-        coffin = GameObject.FindGameObjectWithTag("Coffin");
+    coffin = GameObject.FindGameObjectWithTag("Coffin");
 
-        coffin_Base = coffin.transform.Find("Base");
-        coffin_Lid = coffin.transform.Find("Lid");
+    coffin_Base = coffin.transform.Find("Base");
+    coffin_Lid = coffin.transform.Find("Lid");
 
-        Rigidbody baseRB = coffin.transform.Find("Base").gameObject.GetComponent<Rigidbody>();
-        Rigidbody lidRB = coffin.transform.Find("Lid").gameObject.GetComponent<Rigidbody>();
+    Rigidbody baseRB = coffin_Base.gameObject.GetComponent<Rigidbody>();
+    Rigidbody lidRB = coffin_Lid.gameObject.GetComponent<Rigidbody>();
 
-        baseRB.isKinematic = false;
-        lidRB.isKinematic = false;
+    baseRB.isKinematic = false;
+    lidRB.isKinematic = false;
 
-        // Joint 연결 설정
-        // ConfigurableJoint coffinJoint = coffin_Base.gameObject.GetComponent<ConfigurableJoint>();
-        // if (coffinJoint != null)
-        // {
-        //     coffinJoint.connectedBody = jointPoint.GetComponent<Rigidbody>();
-        //     Debug.Log("Joint가 연결되었습니다.");
-        // }
-        // else
-        // {
-        //     Debug.LogError("ConfigurableJoint 컴포넌트를 찾을 수 없습니다.");
-        // }
-    }
+    jointPoint = GameObject.FindGameObjectWithTag("JointPoint");
+
+    ConfigurableJoint baseCJ = coffin_Base.gameObject.AddComponent<ConfigurableJoint>();
+    baseCJ.connectedBody = jointPoint.GetComponent<Rigidbody>();
+    baseCJ.breakForce = 5000f;
+
+    baseCJ.xMotion = ConfigurableJointMotion.Limited;
+    baseCJ.yMotion = ConfigurableJointMotion.Limited;
+    baseCJ.zMotion = ConfigurableJointMotion.Limited;
+
+    baseCJ.angularXMotion = ConfigurableJointMotion.Locked;
+    baseCJ.angularYMotion = ConfigurableJointMotion.Locked;
+    baseCJ.angularZMotion = ConfigurableJointMotion.Locked;
+
+    JointDrive strongDrive = new JointDrive();
+    strongDrive.positionSpring = 1f;  
+    strongDrive.positionDamper = 500f;
+    strongDrive.maximumForce = float.PositiveInfinity;
+
+    baseCJ.xDrive = strongDrive;
+    baseCJ.yDrive = strongDrive;
+    baseCJ.zDrive = strongDrive;
+
+    baseCJ.rotationDriveMode = RotationDriveMode.Slerp;
+    JointDrive rotationDrive = new JointDrive();
+    rotationDrive.positionSpring = 1000000f;
+    rotationDrive.positionDamper = 500f;
+    rotationDrive.maximumForce = float.PositiveInfinity;
+
+    baseCJ.slerpDrive = rotationDrive;
+}
+
 
     public GameObject SpawnNetworkObject(string objectName, Vector3 location, Quaternion rotation) {
         GameObject selectedObject = null;

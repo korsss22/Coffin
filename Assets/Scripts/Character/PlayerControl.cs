@@ -24,14 +24,13 @@ public class PlayerControl : NetworkBehaviour
     private Animator anim;
     private bool isReady = false;
 
-
     //Rigidbody 컴포넌트를 담을 전역변수
     private Rigidbody rb;
 
     // 카메라 회전 함수
     void RotateCamera() {
         float scrollInput = Input.GetAxis("Mouse ScrollWheel");
-
+    
         Vector3 minScale = new Vector3(1.0f, 1.0f, 1.0f);  // 최소 크기 (0.1f로 설정)
         Vector3 maxScale = new Vector3(8.0f, 8.0f, 8.0f);  // 최대 크기 (2.0f로 설정)
         Vector3 addScaleRatio = new (scaleRatio, scaleRatio, scaleRatio);
