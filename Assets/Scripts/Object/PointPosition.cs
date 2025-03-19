@@ -5,6 +5,7 @@ using UnityEngine;
 public class PointPosition : MonoBehaviour
 {
     public GameObject[] playerList;
+    public float yPosition;
 
     private Vector3 GetAvgVec() {
         playerList = GameObject.FindGameObjectsWithTag("Player");
@@ -23,6 +24,6 @@ public class PointPosition : MonoBehaviour
 
     void FixedUpdate()
     {
-        gameObject.transform.position = GetAvgVec() + new Vector3(0, 1.8f, 0);
+        gameObject.transform.position = GetAvgVec() + new Vector3(0, yPosition, 0);
     }
 }

@@ -79,7 +79,7 @@ public class GameManager : NetworkBehaviour
 
     ConfigurableJoint baseCJ = coffin_Base.gameObject.AddComponent<ConfigurableJoint>();
     baseCJ.connectedBody = jointPoint.GetComponent<Rigidbody>();
-    baseCJ.breakForce = 5000f;
+    baseCJ.breakForce = 8000f;
 
     baseCJ.xMotion = ConfigurableJointMotion.Limited;
     baseCJ.yMotion = ConfigurableJointMotion.Limited;
@@ -90,7 +90,7 @@ public class GameManager : NetworkBehaviour
     baseCJ.angularZMotion = ConfigurableJointMotion.Locked;
 
     JointDrive strongDrive = new JointDrive();
-    strongDrive.positionSpring = 1f;  
+    strongDrive.positionSpring = 10f;  
     strongDrive.positionDamper = 500f;
     strongDrive.maximumForce = float.PositiveInfinity;
 

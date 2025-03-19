@@ -66,6 +66,7 @@ GameObject:
   - component: {fileID: 5116080663153319889}
   - component: {fileID: 4276074840777862993}
   - component: {fileID: 6564924296177670193}
+  - component: {fileID: 6963856021010679392}
   m_Layer: 0
   m_Name: Lid
   m_TagString: Coffin
@@ -215,6 +216,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOver: {fileID: 711597433591039902, guid: df715780ec562a8409eff7ad9cef4d0d, type: 3}
+--- !u!138 &6963856021010679392
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7896251454443377560}
+  m_ConnectedBody: {fileID: 8168182735785866046}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!1 &7896251454583762670
 GameObject:
   m_ObjectHideFlags: 0
