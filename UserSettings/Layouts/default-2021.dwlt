@@ -118,7 +118,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 124
+  controlID: 68
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 1
-  controlID: 125
+  controlID: 69
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 126
+  controlID: 70
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 8096}
   vertical: 0
-  controlID: 43
+  controlID: 21
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1004,23 +1004,23 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Prefabs/Player
+    - Assets/Prefabs/Object
     m_Globs: []
     m_OriginalText: 
     m_FilterByTypeIntersection: 0
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Prefabs/Player
+  - Assets/Prefabs/Object
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\byeon\Downloads\jshop\Coffin
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 300.33334}
-    m_SelectedIDs: 12730000
-    m_LastClickedID: 29458
-    m_ExpandedIDs: 0000000080720000827200008472000086720000887200008a7200008c7200008e72000090720000927200009472000096720000987200009a720000d672000000ca9a3b
+    scrollPos: {x: 0, y: 268.33334}
+    m_SelectedIDs: 3e730000
+    m_LastClickedID: 29502
+    m_ExpandedIDs: 00000000d0720000d2720000d4720000d6720000d8720000da720000dc720000de720000e0720000e2720000e4720000e6720000e8720000ea7200002673000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1048,7 +1048,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000080720000827200008472000086720000887200008a7200008c7200008e72000090720000927200009472000096720000987200009a720000
+    m_ExpandedIDs: 00000000d0720000d2720000d4720000d6720000d8720000da720000dc720000de720000e0720000e2720000e4720000e6720000e8720000ea720000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1165,9 +1165,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: 0483fcffe423fdff0469fdff5677fdffbe77fdff1a86fdffc4c0fdff9054feffd855feff3469feff0c7cfeff168afeffe68efeffb09cfefffeaefeffccb3feff96c1feffb4c6feff7ed4feffbe09ffff0c1fffff7a75ffff2e89ffff8a97ffff22afffffacbbffff0afbfffff4ffffff42970000d0a70000caaf000044bf000042e6000086ee0000303f0100b6af0100a0d10100
+      m_SelectedIDs: d66f0000
+      m_LastClickedID: 28630
+      m_ExpandedIDs: a6f9feff6e07ffff8ef4ffff0afbfffff4ffffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

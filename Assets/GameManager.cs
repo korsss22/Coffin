@@ -24,11 +24,13 @@ public class GameManager : NetworkBehaviour
     public Transform coffin_Lid;
     private GameObject jointPoint;
     private Coroutine nowCoroutine;
+    public bool isGameOver = false;
+    public bool isGameClear = false;
     private void OnReadyPlayerUpdated(int oldValue, int newValue) {
         Debug.Log("readyPlayer의 값이 "+newValue+"가 되었어요!! *^^*");
     }
 
-    
+    [Server]
     public void GameStart() {
         if (!isServer) {Debug.Log("isnotServer");return;}
 
@@ -41,12 +43,14 @@ public class GameManager : NetworkBehaviour
         } else {
             if (nowCoroutine != null) {
                 StopCoroutine(nowCoroutine);
+                nowCoroutine = null;
                 Debug.Log("StopCoroutine");
                 // UIManager.instance.UpdateTimer(timer, 0,false);
             }
         }
     }
 
+    [Server]
     private IEnumerator CountDown(int countTime) {
         currentTime = countTime;
 
@@ -101,6 +105,8 @@ public class GameManager : NetworkBehaviour
     rotationDrive.maximumForce = float.PositiveInfinity;
 
     baseCJ.slerpDrive = rotationDrive;
+
+    
 }
 
 

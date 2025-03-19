@@ -3496,6 +3496,8 @@ MonoBehaviour:
   coffin: {fileID: 5578613589714322240, guid: 40f3be417815df142bf9127c58ffc8b9, type: 3}
   coffin_Base: {fileID: 0}
   coffin_Lid: {fileID: 0}
+  isGameOver: 0
+  isGameClear: 0
 --- !u!4 &1935041212
 Transform:
   m_ObjectHideFlags: 0
